@@ -2,10 +2,9 @@
 
 BRANCH=$1
 
-APACHE_HOST_DIR=/usr/local/var/www/risk-monitor.com
-REPO_DIR=/Users/mike/bin/risk-monitor
-REPO_API_DIR=/Users/mike/bin/risk-monitor/server/src
-WSGI_FILE=/Users/mike/.private/api.wsgi
+APACHE_HOST_DIR=/var/www/html/pi-stream-cast
+REPO_DIR=/Users/mike/bin/pi-stream-cast
+REPO_API_DIR="$REPO_DIR/server"
 
 if [[ -z $BRANCH ]]; then
   BRANCH="main"
@@ -21,9 +20,9 @@ checkout_branch()
 prep_apache_dir()
 {
   echo "prepping apache host directory"
-  cd $APACHE_HOST_DIR || exit
-  rm -Rf ./*
-  mkdir ./api
+  sudo rm -Rf "$APACHE_HOST_DIR/*"
+  sudo mkdir "$APACHE_HOST_DIR/api"
+  sudo chown -Rf www-data:www-data "$APACHE_HOST_DIR/api"
 }
 
 build_and_install_site()
@@ -33,22 +32,23 @@ build_and_install_site()
   rm -Rf ./build/*
   npm install
   npm run build
-  cp -Rf ./build/* "$APACHE_HOST_DIR/"
+  sudo cp -Rf ./build/* "$APACHE_HOST_DIR/"
+  sudo chown -Rf www-data:www-data "$APACHE_HOST_DIR/*"
 }
 
 install_api()
 {
   echo "installing API"
-  cd "$REPO_DIR/server/src" || exit
-  cp ./application.py "$APACHE_HOST_DIR/api/"
-  cp -R ./app "$APACHE_HOST_DIR/api/"
-  cp $WSGI_FILE "$APACHE_HOST_DIR/api/"
+  cd "$REPO_DIR/server/" || exit
+  sudo cp ./{application.py,api.wsgi} "$APACHE_HOST_DIR/api/"
+  sudo cp -R ./app "$APACHE_HOST_DIR/api/"
+  sudo chown -Rf www-data:www-data "$APACHE_HOST_DIR/*"
 }
 
 restart_apache()
 {
   echo "restarting apache"
-  brew services restart httpd
+  sudo systemctl restart apache2 
 }
 
 # Main

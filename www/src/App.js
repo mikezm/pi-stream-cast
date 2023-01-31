@@ -9,15 +9,15 @@ function App() {
   
   const handlePlay = async () => {
     setIsPlaying(true);
-    try {
-      const response = await fetch(`${baseUri}/api/audio`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
+    //try {
+    //  const response = await fetch(`${baseUri}/api/audio`, {
+    //    method: 'GET'
+    //  });
+    //  const data = await response.json();
+    //  console.log(data);
+    //} catch (error) {
+    //  console.error(error);
+    //}
 
     try {
       const response = await fetch(`${baseUri}/api/cast`, {
