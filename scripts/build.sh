@@ -13,8 +13,8 @@ fi
 checkout_branch()
 {
   cd $REPO_DIR || exit
-  git pull --rebase
-  git checkout $BRANCH
+  git pull --rebase || exit
+  git checkout $BRANCH || exit
 }
 
 prep_apache_dir()
