@@ -45,7 +45,7 @@ install_api()
 
 set_permissions()
 {
-  sudo chown -R www-data:www-data "$APACHE_HOST_DIR/*"
+  sudo chown -R www-data:www-data "$APACHE_HOST_DIR"
 }
 
 restart_apache()
