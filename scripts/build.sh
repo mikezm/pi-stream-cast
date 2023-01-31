@@ -20,9 +20,9 @@ checkout_branch()
 prep_apache_dir()
 {
   echo "prepping apache host directory"
-  sudo rm -Rf "$APACHE_HOST_DIR/*"
+  sudo rm -f "$APACHE_HOST_DIR/*"
+  sudo rm -Rf "$APACHE_HOST_DIR/api"
   sudo mkdir "$APACHE_HOST_DIR/api"
-  sudo chown -Rf www-data:www-data "$APACHE_HOST_DIR/api"
 }
 
 build_and_install_site()
@@ -33,7 +33,6 @@ build_and_install_site()
   npm install
   npm run build
   sudo cp -Rf ./build/* "$APACHE_HOST_DIR/"
-  sudo chown -Rf www-data:www-data "$APACHE_HOST_DIR/*"
 }
 
 install_api()
@@ -41,8 +40,12 @@ install_api()
   echo "installing API"
   cd "$REPO_DIR/server/" || exit
   sudo cp ./{application.py,api.wsgi} "$APACHE_HOST_DIR/api/"
-  sudo cp -R ./app "$APACHE_HOST_DIR/api/"
-  sudo chown -Rf www-data:www-data "$APACHE_HOST_DIR/*"
+  sudo cp -Rf ./app "$APACHE_HOST_DIR/api/"
+}
+
+set_permissions()
+{
+  sudo chown -R www-data:www-data "$APACHE_HOST_DIR/*"
 }
 
 restart_apache()
@@ -56,5 +59,6 @@ checkout_branch
 prep_apache_dir
 build_and_install_site
 install_api
+set_permissions
 restart_apache
 exit 0
