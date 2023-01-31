@@ -1,1 +1,7 @@
 venv
+
+server/app/__pycache__
+server/app/api/__pycache__
+server/app/services/__pycache__
+server/app/services/*/__pycache__
+*.py[cod]

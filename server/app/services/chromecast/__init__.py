@@ -1,1 +1,1 @@
-from app.services.chromecast.chromecast import get_chromecast
+from app.services.chromecast.chromecast import Casts
