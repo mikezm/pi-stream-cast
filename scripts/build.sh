@@ -4,7 +4,6 @@ BRANCH=$1
 
 APACHE_HOST_DIR=/var/www/html/pi-stream-cast
 REPO_DIR=/home/mike/bin/pi-stream-cast
-REPO_API_DIR="$REPO_DIR/server"
 
 if [[ -z $BRANCH ]]; then
   BRANCH="main"
