@@ -24,8 +24,8 @@ To install the needed python packages, from the `server` folder run:
 pip install -r requirements.txt
 ```
 
-## Website Install
-### Install Node:
+## Website Installation
+#### Install Node:
 ```
 curl -sL https://deb.nodesource.com/setup_18.x | sudo bash -
 ``` 
@@ -36,7 +36,7 @@ you may also need:
 ```
 sudo apt-get install gcc g++ make
 ```
-### Build the site:
+#### Build the site:
 From the `www` folder, run:
 ```
 npm install
@@ -45,7 +45,7 @@ npm install
 npm run build
 ```
 
-## Starting the Development servers
+## Starting the development servers
 Both the API and site have development servers to faciltate testing and debuggin. 
 
 #### **API** - from the `server` folder, run:
