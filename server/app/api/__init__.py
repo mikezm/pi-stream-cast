@@ -17,6 +17,11 @@ def audio_stream():
     return Response(stream.generate_audio(), mimetype="audio/x-wav;codec=pcm")
 
 
+@app.route("/list-casts")
+def list_casts():
+    return Response(casts.list_chromecasts(), 200)
+
+
 @app.route("/start-cast")
 def start_cast():
     casts.select_cast_device(CHROME_CAST_UUID)

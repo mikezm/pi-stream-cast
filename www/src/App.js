@@ -20,7 +20,7 @@ function App() {
     //}
 
     try {
-      const response = await fetch(`${baseUri}/api/cast`, {
+      const response = await fetch(`${baseUri}/start-cast`, {
         method: 'GET'
       });
       const data = await response.json();
@@ -34,7 +34,7 @@ function App() {
   const handleStop = async () => {
     setIsPlaying(false);
     try {
-      const response = await fetch(`${baseUri}/api/stop`, {
+      const response = await fetch(`${baseUri}/stop-cast`, {
         method: 'GET'
       });
       const data = await response.json();

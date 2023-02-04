@@ -32,3 +32,12 @@ class Casts:
 
     def stop(self):
         self.mc.stop()
+
+    def list_chromecasts(self):
+        return [{
+            'name': cast.name,
+            'uuid': str(cast.uuid),
+            'ip': cast.cast_info.host,
+            'port': cast.cast_info.port,
+            'type': cast.cast_info.cast_type
+        } for cast in self.chromecasts]
