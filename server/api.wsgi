@@ -1,6 +1,9 @@
 import sys
 import glob
+import os
 
+
+os.eviron['PI_STREAM_CAST_ENV'] = "prod"
 
 pub_html = glob.glob("/var/www/html/pi-stream-cast/api")
 

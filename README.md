@@ -56,3 +56,10 @@ python application.py
 ```
 npm start
 ```
+
+## Apache webserver on Raspberry Pi
+
+#### 
+```
+sudo apt-get install apache2 libapache2-mod-wsgi-py3
+```
