@@ -1,4 +1,4 @@
-from server.app.api.config import USB_DEVICE_NAME
+from app.config import USB_DEVICE_NAME
 import pyaudio
 
 """

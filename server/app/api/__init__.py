@@ -5,7 +5,7 @@ py-stream-cast API
 from app.config import CHROME_CAST_UUID, CAST_STREAM_ADDRESS
 from app.services.chromecast import Casts
 from app.services.audio import Stream
-from flask import Flask, Response
+from flask import Flask, Response, jsonify
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ def audio_stream():
 
 @app.route("/list-casts")
 def list_casts():
-    return Response(casts.list_chromecasts(), 200)
+    return jsonify(casts.list_chromecasts()), 200
 
 
 @app.route("/start-cast")
