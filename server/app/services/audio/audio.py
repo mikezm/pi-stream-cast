@@ -19,10 +19,11 @@ class Stream:
         self.rate = 44100
         self.bits_per_sample = 16
         self.refresh()
-        self.device_index = self.get_device_index()
+        
 
     def refresh(self):
         self.p = pyaudio.PyAudio()
+        self.device_index = self.get_device_index()
         self.ready = True
 
     def get_device_index(self):
