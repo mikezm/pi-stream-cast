@@ -4,7 +4,7 @@ import play from './img/play.svg';
 import stop from './img/stop.svg';
 
 function App() {
-  const baseUri = process.env.PI_STREAM_CAST_ENV === 'prod' ? 'http://localhost' : 'http://localhost:5000';
+  const baseUri = process.env.PI_STREAM_CAST_ENV === 'prod' ? 'http://127.0.0.1' : 'http://127.0.0.1:5000';
   const [isPlaying, setIsPlaying] = useState(false);
   
   const handlePlay = async () => {
