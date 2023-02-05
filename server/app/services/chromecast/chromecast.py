@@ -31,7 +31,10 @@ class Casts:
         self.mc.play_media(url, content_type)
 
     def stop(self):
-        self.mc.stop()
+        try:
+            self.mc.stop()
+        except AttributeError as e:
+            pass
 
     def list_chromecasts(self):
         return [{

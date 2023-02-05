@@ -58,7 +58,7 @@ class Stream:
                 data = wav_header+self.stream.read(self.chunk * 2)
                 first_run = False
             else:
-                data = wav_header+self.stream.read(self.chunk)
+                data = self.stream.read(self.chunk)
             yield (data)
 
     def close(self):
