@@ -8,12 +8,13 @@ from app.services.audio import Stream
 from flask import Flask, Response, jsonify
 
 app = Flask(__name__)
-
 casts = Casts()
+stream = Stream()
 
 @app.route("/audio-stream")
 def audio_stream():
-    stream = Stream()
+    if not stream.ready:
+        stream.refresh()
     return Response(stream.generate_audio(), mimetype="audio/x-wav;codec=pcm")
 
 
@@ -32,4 +33,5 @@ def start_cast():
 @app.route("/stop-cast")
 def stop_cast():    
     casts.stop()
+    stream.close()
     return Response(None, 200)

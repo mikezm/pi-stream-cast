@@ -12,13 +12,18 @@ BIT_PER_SAMPLE = 16
 
 class Stream:
     def __init__(self) -> None:
-        self.p = pyaudio.PyAudio()
+        self.ready = False
         self.format = pyaudio.paInt16
         self.chunk = 262144
         self.channels = 2
         self.rate = 44100
         self.bits_per_sample = 16
+        self.refresh()
         self.device_index = self.get_device_index()
+
+    def refresh(self):
+        self.p = pyaudio.PyAudio()
+        self.ready = True
 
     def get_device_index(self):
         for index in range(self.p.get_device_count()):
@@ -44,14 +49,19 @@ class Stream:
 
     def generate_audio(self):
         wav_header = self.generate_header()
-        stream = self.p.open(format=self.format, channels=self.channels, rate=self.rate, input=True,
+        self.stream = self.p.open(format=self.format, channels=self.channels, rate=self.rate, input=True,
                         input_device_index=self.device_index, output=True, frames_per_buffer=self.chunk)
 
         first_run = True
         while True:
             if first_run:
-                data = wav_header+stream.read(self.chunk * 2)
+                data = wav_header+self.stream.read(self.chunk * 2)
                 first_run = False
             else:
-                data = wav_header+stream.read(self.chunk)
+                data = wav_header+self.stream.read(self.chunk)
             yield (data)
+
+    def close(self):
+        self.ready = False
+        self.stream.close()
+        self.p.terminate()

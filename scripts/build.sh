@@ -38,6 +38,11 @@ install_api()
 {
   echo "installing API"
   cd "$REPO_DIR/server/" || exit
+  rm -rf ./venv
+  python -m venv venv 
+  source ./venv/bin/activate
+  pip install -r requirements.txt 
+  sudo cp -Rf ./venv "$APACHE_HOST_DIR/api/" 
   sudo cp ./{application.py,api.wsgi} "$APACHE_HOST_DIR/api/"
   sudo cp -Rf ./app "$APACHE_HOST_DIR/api/"
 }

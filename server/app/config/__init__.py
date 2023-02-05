@@ -21,7 +21,6 @@ CAST_STREAM_ADDRESS = get_local_ip()
 if RUN_ENV == "dev":
     CAST_STREAM_ADDRESS += ":5000"
 
-
 CHROME_CAST_UUID = "a050f03a-0faa-9fec-022c-2c0dd8f4dc65"
 
 USB_DEVICE_NAME = "USB Audio CODEC: - (hw:1,0)"
