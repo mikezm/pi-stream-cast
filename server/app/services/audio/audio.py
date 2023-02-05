@@ -27,7 +27,7 @@ class Stream:
 
     def get_device_index(self):
         for index in range(self.p.get_device_count()):
-            if self.p.get_device_info_by_index(index).get('name') == USB_DEVICE_NAME:
+            if USB_DEVICE_NAME in self.p.get_device_info_by_index(index).get('name'):
                 return index
 
     def generate_header(self):

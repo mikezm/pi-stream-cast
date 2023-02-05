@@ -23,4 +23,4 @@ if RUN_ENV == "dev":
 
 CHROME_CAST_UUID = "a050f03a-0faa-9fec-022c-2c0dd8f4dc65"
 
-USB_DEVICE_NAME = "USB Audio CODEC: - (hw:1,0)"
+USB_DEVICE_NAME = "USB Audio CODEC"
