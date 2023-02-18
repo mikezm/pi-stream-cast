@@ -63,6 +63,12 @@ class Stream:
             yield (data)
 
     def close(self):
-        self.ready = False
-        self.stream.close()
-        self.p.terminate()
+        try:
+            self.ready = False
+            self.stream.stop_stream()
+            self.stream.close()
+            self.p.terminate()
+            return [False, None]
+        except:
+            pass
+            return [True, "unable to stop stream"]
