@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import AudioPlayer from './components/AudioPlayer/AudioPlayer';
+import AudioPlayer from './containers/AudioPlayer/AudioPlayer';
 import reportWebVitals from './reportWebVitals';
 
 //import { configureStore } from '@reduxjs/toolkit'

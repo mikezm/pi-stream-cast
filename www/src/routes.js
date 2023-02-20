@@ -1,4 +1,4 @@
-const baseUri = process.env.PI_STREAM_CAST_ENV === 'prod' ? 'http://127.0.0.1' : 'http://127.0.0.1:5000';
+const baseUri = process.env.PI_STREAM_CAST_ENV === 'prod' ? 'http://localhost/api' : 'http://192.168.50.242:5000/api';
 
 export const AUDIO_STREAM = `${baseUri}/audio-stream`;
 export const LIST_CASTS = `${baseUri}/list-casts`;

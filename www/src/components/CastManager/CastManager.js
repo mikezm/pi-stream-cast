@@ -5,6 +5,10 @@ function CastManager() {
   const [casts, setCasts] = useState([]);
 
   useEffect(() => {
+    handleList();
+  }, []);
+
+  const handleList = async () => {
     try {
       const response = await fetch(routes.LIST_CASTS, {method: 'GET'});
       const data = await response.json();
@@ -13,7 +17,7 @@ function CastManager() {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  };
   
   return (
     <div className="cast-list">
