@@ -6,6 +6,7 @@ from app.config import CHROME_CAST_UUID, CAST_STREAM_ADDRESS, API_BASE
 from app.services.chromecast import Casts
 from app.services.audio import Stream
 from flask import Flask, Response, Blueprint, jsonify
+from flask_cors import CORS
 
 
 bp = Blueprint('api', __name__, url_prefix=API_BASE)
@@ -96,3 +97,4 @@ def volume_unmute():
 
 app = Flask(__name__)
 app.register_blueprint(bp)
+CORS(app)
