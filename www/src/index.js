@@ -4,24 +4,7 @@ import './index.css';
 import AudioPlayer from './containers/AudioPlayer/AudioPlayer';
 import reportWebVitals from './reportWebVitals';
 
-//import { configureStore } from '@reduxjs/toolkit'
-//import { Provider } from 'react-redux';
-//import reducers from "./store/reducers/index";
-//export const store = configureStore({
-//  reducer: {
-//    todos: todosReducer,
-//    filters: filtersReducer
-//  }
-//})
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
-//root.render(
-//  <React.StrictMode>
-//    <Provider store={store}>
-//      <App />
-//    </Provider>
-//  </React.StrictMode>
-//);
 
 root.render(
   <React.StrictMode>
