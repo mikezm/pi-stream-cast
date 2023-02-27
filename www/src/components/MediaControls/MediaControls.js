@@ -29,25 +29,25 @@ function MediaControls() {
   };
 
   return (
-    <div class="play-btn " style={{display: "flex"}}>
-        <button class="ctrl-btn"
+    <div className="play-btn " style={{display: "flex"}}>
+        <button className="ctrl-btn"
           onClick={handlePlay} 
           disabled={isPlaying} 
           style={{
-            backgrougColor: "#000",
+            backgroundColor: "#000",
             height: "150px",
             width: "150px",
             radius: "50%",
             float: "left",
             inline: "true"
           }}>
-          <img src={play} class="play-btn__svg" alt="Play" />
+          <img src={play} className="play-btn__svg" alt="Play" />
         </button>
-        <button class="ctrl-btn"
+        <button className="ctrl-btn"
           onClick={handleStop} 
           disabled={!isPlaying}
           style={{
-            backgrougColor: "#000",
+            backgroundColor: "#000",
             height: "150px",
             width: "150px",
             radius: "50%",
@@ -55,7 +55,7 @@ function MediaControls() {
             inline: "true"
           }}
         >
-          <img src={stop} class="play-btn__svg" alt="Stop" />
+          <img src={stop} className="play-btn__svg" alt="Stop" />
         </button>
       </div>
   );

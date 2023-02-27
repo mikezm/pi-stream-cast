@@ -1,9 +1,21 @@
 import * as routes from '../../routes';
 import React, { useState, useEffect } from "react";
+import CastDeviceList from './CastDeviceList';
+import CastControls from './CastControls';
+import Grid from '@mui/material/Grid';
 
 function CastManager() {
   const [casts, setCasts] = useState([]);
-  const [groups, setCastGroups] = useState([]);
+  const [cast, setCast] = useState({});
+  const [listDisabled, setListDisabled] = useState(false);
+
+  const handleCastSelect = (value) => {
+    setCast(value);
+  };
+
+  const handleCastPlay = (value) => {
+    setListDisabled(!listDisabled);
+  };
 
   useEffect(() => {
     handleList();
@@ -11,8 +23,7 @@ function CastManager() {
 
   const handleList = async () => {
     try {
-      const response = await fetch(routes.LIST_CASTS, {method: 'GET'});
-      const data = await response.json();
+      const data = await routes.get(routes.LIST_CASTS);
       let singleCasts = [];
       let groupCasts = [];
       data.forEach(element => {
@@ -22,32 +33,21 @@ function CastManager() {
           singleCasts.push(element);
         }
       });
-      setCasts(singleCasts);
-      setCastGroups(groupCasts);
-      console.log(data);
+      setCasts([...groupCasts, ...singleCasts]);
     } catch (error) {
       console.error(error);
     }
   };
   
   return (
-    <div className='row'>
-      <div className='col'>
-        <div className="cast-list">
-          {casts.map((cast) => (
-            <div key={cast.uuid}>{cast.name}</div>
-          ))}
-        </div>
-      </div>
-      <div className='col'>
-        <div className="cast-list-group">
-          {groups.map((cast) => (
-            <div key={cast.uuid}>{cast.name}</div>
-          ))}
-        </div>
-      </div>
-    </div>
-    
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} alignItems="baseline">
+      <Grid item xs={12} md={4}>
+        <CastDeviceList casts={casts} onCastSelect={handleCastSelect} disabled={listDisabled}/>
+      </Grid>
+      <Grid item xs={12} md={8}>
+        <CastControls cast={cast} onCastPlay={handleCastPlay}/>
+      </Grid>
+    </Grid>
   );
 }
 
