@@ -88,39 +88,51 @@ function CastControls(props) {
         <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
           {isPlaying ? 
             <Tooltip title="Stop">
-              <IconButton aria-label="stop" onClick={handlePlay} disabled={isPlayDisabled}>
-                <StopIcon sx={{ height: 38, width: 38 }} />
-              </IconButton>
+              <span>
+                <IconButton aria-label="stop" onClick={handlePlay} disabled={isPlayDisabled}>
+                  <StopIcon sx={{ height: 38, width: 38 }} />
+                </IconButton>
+              </span>
             </Tooltip>
             :
             <Tooltip title="Play">
-              <IconButton aria-label="play" onClick={handlePlay} disabled={isPlayDisabled}>
-                <PlayArrowIcon sx={{ height: 38, width: 38 }} />
-              </IconButton>
+              <span>
+                <IconButton aria-label="play" onClick={handlePlay} disabled={isPlayDisabled}>
+                  <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+                </IconButton>
+              </span>
             </Tooltip>
           }
           {isMuted ?
             <Tooltip title="Unmute">
-              <IconButton aria-label="unmute" onClick={handleMute} disabled={!isPlaying || isVolumeDisabled}>
-                <VolumeOffIcon />
-              </IconButton>
+              <span>
+                <IconButton aria-label="unmute" onClick={handleMute} disabled={!isPlaying || isVolumeDisabled || isPlayDisabled}>
+                  <VolumeOffIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           :
             <Tooltip title="Mute">
-              <IconButton aria-label="mute" onClick={handleMute} disabled={!isPlaying || isVolumeDisabled}>
-                <VolumeMuteIcon />
-              </IconButton>
+              <span>
+                <IconButton aria-label="mute" onClick={handleMute} disabled={!isPlaying || isVolumeDisabled || isPlayDisabled}>
+                  <VolumeMuteIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           }
           <Tooltip title="Volume Down">
-            <IconButton aria-label="volume down" onClick={handleVolumeDown} disabled={!isPlaying || isVolumeDisabled || isMuted}>
-              <VolumeDownIcon />
-            </IconButton>
+            <span>
+              <IconButton aria-label="volume down" onClick={handleVolumeDown} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}>
+                <VolumeDownIcon />
+              </IconButton>
+            </span>
           </Tooltip>
           <Tooltip title="Volume Up">
-            <IconButton aria-label="volume up" onClick={handleVolumeUp} disabled={!isPlaying || isVolumeDisabled || isMuted}>
-              <VolumeUpIcon />
-            </IconButton>
+            <span>
+              <IconButton aria-label="volume up" onClick={handleVolumeUp} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}>
+                <VolumeUpIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         </Box>
       </Box>
