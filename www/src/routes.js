@@ -12,3 +12,13 @@ export const VOLUME_UP = `${baseUri}/volume-up`;
 export const VOLUME_DOWN = `${baseUri}/volume-down`;
 export const VOLUME_MUTE = `${baseUri}/volume-mute`;
 export const VOLUME_UNMUTE = `${baseUri}/volume-unmute`;
+export const get = async (uri) => {
+  try {
+    const response = await fetch(uri, {method: 'GET'});
+    const data = await response.json();
+    console.log(uri, data);
+    return data;
+  } catch (error) {
+    console.error(uri, error);
+  }
+};

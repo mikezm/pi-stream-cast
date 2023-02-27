@@ -34,7 +34,7 @@ function MediaControls() {
           onClick={handlePlay} 
           disabled={isPlaying} 
           style={{
-            backgrougColor: "#000",
+            backgroundColor: "#000",
             height: "150px",
             width: "150px",
             radius: "50%",
@@ -47,7 +47,7 @@ function MediaControls() {
           onClick={handleStop} 
           disabled={!isPlaying}
           style={{
-            backgrougColor: "#000",
+            backgroundColor: "#000",
             height: "150px",
             width: "150px",
             radius: "50%",
