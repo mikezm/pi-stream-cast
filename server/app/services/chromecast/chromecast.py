@@ -1,8 +1,11 @@
 import time
 import pychromecast
 
-
+STATUS_ACTIVE = "ACTIVE"
+STATUS_INACTIVE = "INACTIVE"
+STATUS_NEW = "NEW"
 VOLUME_STEP = 0.025
+
 
 class Casts:
     def __init__(self) -> None:
@@ -12,6 +15,8 @@ class Casts:
         self.chromecasts = None
         self.browser = None
         self.before_mute_volume = None
+        self.playing = False
+        self.status = STATUS_INACTIVE
         self.fetch_chromecasts()
 
     def fetch_chromecasts(self):
@@ -43,11 +48,15 @@ class Casts:
     def play(self, url, content_type):
         self.mc.play_media(url, content_type)
         self.mc.block_until_active()
+        self.playing = True
+        self.status = STATUS_ACTIVE
 
     def stop(self):
         try:
             self.mc.stop()
             self.cast.wait()
+            self.status = STATUS_INACTIVE
+            self.playing = False
             return [False, None]
         except:
             pass

@@ -3,7 +3,7 @@ py-stream-cast API
 
 """
 from app.config import CHROME_CAST_UUID, CAST_STREAM_ADDRESS, API_BASE
-from app.services.chromecast import Casts
+from app.services.chromecast import Casts, STATUS_ACTIVE, STATUS_NEW
 from app.services.audio import Stream
 from flask import Flask, Response, Blueprint, jsonify
 from flask_cors import CORS
@@ -12,6 +12,24 @@ from flask_cors import CORS
 bp = Blueprint('api', __name__, url_prefix=API_BASE)
 casts = Casts()
 stream = Stream()
+
+@bp.route("/status")
+def status():
+    cast_status = False
+    cast_object = {}
+    if casts.status == STATUS_ACTIVE:
+        cast_status = True
+        cast_object = casts.get_cast_info()
+
+    if casts.status == STATUS_NEW:
+        cast_status = True
+
+    response = {
+        'streamStatus': True if stream.ready else False,
+        'castStatus': cast_status,
+        'castInfo': cast_object
+    }
+    return jsonify(response), 200
 
 @bp.route("/audio-stream")
 def audio_stream():
