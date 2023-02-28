@@ -1,6 +1,6 @@
 const baseUri = process.env.PI_STREAM_CAST_ENV === 'prod' ? 'http://localhost/api' : 'http://192.168.50.242:5000/api';
 
-export const AUDIO_STREAM = `${baseUri}/audio-stream`;
+export const STATUS = `${baseUri}/status`;
 export const LIST_CASTS = `${baseUri}/list-casts`;
 export const REFRESH_CASTS = `${baseUri}/refresh-casts`;
 export const START_CAST = `${baseUri}/start-cast`;

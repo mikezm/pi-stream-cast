@@ -29,12 +29,12 @@ function CastControls(props) {
     return new Promise(resolve => setTimeout(resolve, 1000));
   };
   
-  const handlePlay = async (id) => {
+  const handlePlay = async () => {
     onCastPlay(!isPlaying);
     setIsPlayDisabled(true);
-    const uri = isPlaying ? routes.STOP_CAST : `${routes.START_CAST}/${id}`;
-    //const data = await routes.get(uri);
-    await delay();
+    const uri = isPlaying ? routes.STOP_CAST : `${routes.START_CAST}/${cast.uuid}`;
+    const data = await routes.get(uri);
+    //await delay();
     setIsPlayDisabled(false);
     setIsPlaying(!isPlaying);
     
@@ -43,8 +43,8 @@ function CastControls(props) {
   const handleMute = async () => { 
     setIsVolumeDisabled(true);
     const uri = isMuted ? routes.VOLUME_UNMUTE : routes.VOLUME_MUTE;
-    //const data = await routes.get(uri);
-    await delay();
+    const data = await routes.get(uri);
+    //await delay();
     setIsVolumeDisabled(false);
     setIsMuted(!isMuted);
   };
@@ -52,15 +52,15 @@ function CastControls(props) {
 
   const handleVolumeUp = async () => {
     setIsVolumeDisabled(true); 
-    //const data = await routes.get(routes.VOLUME_UP);
-    await delay();
+    const data = await routes.get(routes.VOLUME_UP);
+    //await delay();
     setIsVolumeDisabled(false);
   };
 
   const handleVolumeDown = async () => {
     setIsVolumeDisabled(true); 
-    //const data = await routes.get(routes.VOLUME_DOWN);
-    await delay();
+    const data = await routes.get(routes.VOLUME_DOWN);
+    //await delay();
     setIsVolumeDisabled(false); 
   };
   //useEffect(() => {

@@ -4,7 +4,7 @@ import pychromecast
 STATUS_ACTIVE = "ACTIVE"
 STATUS_INACTIVE = "INACTIVE"
 STATUS_NEW = "NEW"
-VOLUME_STEP = 0.025
+VOLUME_STEP = 0.01
 
 
 class Casts:
@@ -89,7 +89,7 @@ class Casts:
         return [True, "volume out of range"]
 
     def get_volume(self):
-        return int(round(100 * self.cast.status.volume_level, 0))
+        return round(self.cast.status.volume_level, 2)
 
     def volume_up(self):
         current_volume = self.get_volume()
