@@ -74,7 +74,7 @@ class Casts:
     def get_cast_info(self):
         volume = self.get_volume()
         return {
-            'name': self.cast.cast_info,
+            'name': self.cast.name,
             'uuid': str(self.cast.uuid),
             'ip': self.cast.cast_info.host,
             'type': self.cast.cast_info.cast_type,

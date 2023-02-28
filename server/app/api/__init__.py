@@ -27,7 +27,7 @@ def status():
         cast_status = True
 
     response = {
-        'streamStatus': (stream.ready),
+        'streamStatus': stream.ready,
         'castStatus': cast_status,
         'castInfo': cast_object
     }
@@ -52,8 +52,8 @@ def refresh_casts():
 def start_cast(id):
     casts.select_cast_device(id)
     casts.play("http://{}{}/audio-stream".format(CAST_STREAM_ADDRESS, API_BASE), "audio/x-wav")
-    #response = casts.get_cast_info()
-    return jsonify({'success': True, 'message': 'cast started'}), 200
+    response = casts.get_cast_info()
+    return jsonify({'success': True, 'message': 'cast started', 'data': response}), 200
 
 @bp.route("/stop-cast")
 def stop_cast():
