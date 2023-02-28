@@ -5,6 +5,8 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Tooltip from '@mui/material/Tooltip';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -20,6 +22,7 @@ function CastControls(props) {
   const [isPlayDisabled, setIsPlayDisabled] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isVolumeDisabled, setIsVolumeDisabled] = useState(false);
+  const [volume, setVolume] = useState(0.0);
 
   useEffect(() => {
     setIsPlayDisabled(!(props.cast.uuid));
@@ -29,15 +32,21 @@ function CastControls(props) {
   const delay = async (num=1) => {
     return new Promise(resolve => setTimeout(resolve, num * 1000));
   };
+
+  const roundVolume = (vol) => {
+    return Math.round(100 * vol);
+  };
   
   const handlePlay = async () => {
     onCastPlay(!isPlaying);
     setIsPlayDisabled(true);
-    const uri = isPlaying ? routes.STOP_CAST : `${routes.START_CAST}/${cast.uuid}`;
-    await routes.get(uri);
     if (isPlaying) {
+      await routes.get(routes.STOP_CAST);
       await delay(2);
       await routes.get(routes.STOP_STREAM);
+    } else {
+      const data = await routes.get(`${routes.START_CAST}/${cast.uuid}`);
+      setVolume(roundVolume(data.data.volume));
     }
     //await delay();
     setIsPlayDisabled(false);
@@ -48,7 +57,8 @@ function CastControls(props) {
   const handleMute = async () => { 
     setIsVolumeDisabled(true);
     const uri = isMuted ? routes.VOLUME_UNMUTE : routes.VOLUME_MUTE;
-    await routes.get(uri);
+    const data = await routes.get(uri);
+    setVolume(roundVolume(data.volume));
     //await delay();
     setIsVolumeDisabled(false);
     setIsMuted(!isMuted);
@@ -58,13 +68,15 @@ function CastControls(props) {
   const handleVolumeUp = async () => {
     setIsVolumeDisabled(true); 
     const data = await routes.get(routes.VOLUME_UP);
+    setVolume(roundVolume(data.volume));
     //await delay();
     setIsVolumeDisabled(false);
   };
 
   const handleVolumeDown = async () => {
     setIsVolumeDisabled(true); 
-    await routes.get(routes.VOLUME_DOWN);
+    const data = await routes.get(routes.VOLUME_DOWN);
+    setVolume(roundVolume(data.volume));
     //await delay();
     setIsVolumeDisabled(false); 
   };
@@ -77,7 +89,13 @@ function CastControls(props) {
   //useEffect(() => {
   //  handleVolumeDown();
   //}, []);
-  
+
+  const handleVolumeChange = async (value) => {
+    //const newVolume = (value / 100).toFixed(2);
+    //const data = await routes.get(`${routes.SET_VOLUME}/${newVolume}`);
+    //setVolume(roundVolume(data.volume));
+    console.log('volume set to:', value)
+  };
 
   return (
     <Card sx={{ display: 'flex' }}>
@@ -132,6 +150,7 @@ function CastControls(props) {
               </IconButton>
             </span>
           </Tooltip>
+          <Slider aria-label="Volume" value={volume} onChange={handleVolumeChange} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}/>
           <Tooltip title="Volume Up">
             <span>
               <IconButton aria-label="volume up" onClick={handleVolumeUp} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}>

@@ -73,7 +73,7 @@ def stop_stream():
 
 @bp.route("/get-volume")
 def get_volume():   
-    return jsonify({'success': True, 'data': {'volume': casts.get_volume()}}), 200
+    return jsonify({'success': True, 'volume': casts.get_volume()}), 200
 
 @bp.route("/set-volume/<float:volume>")
 def set_volume(volume):   
@@ -81,7 +81,7 @@ def set_volume(volume):
     if err:
         return jsonify({'success': False, 'message': message}), 500
 
-    return jsonify({'success': True, 'message': 'volume set to: {}'.format(volume), 'data': {'volume': casts.get_volume()} }), 200
+    return jsonify({'success': True, 'message': 'volume set to: {}'.format(volume), 'volume': casts.get_volume()}), 200
 
 @bp.route("/volume-up")
 def volume_up():   
@@ -89,7 +89,7 @@ def volume_up():
     if err:
         return jsonify({'success': False, 'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume up', 'data': {'volume': casts.get_volume()}}), 200
+    return jsonify({'success': True, 'message': 'volume up', 'volume': casts.get_volume()}), 200
 
 @bp.route("/volume-down")
 def volume_down():   
@@ -97,7 +97,7 @@ def volume_down():
     if err:
         return jsonify({'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume down', 'data': {'volume': casts.get_volume()}}), 200
+    return jsonify({'success': True, 'message': 'volume down', 'volume': casts.get_volume()}), 200
 
 @bp.route("/volume-mute")
 def volume_mute():   
@@ -105,7 +105,7 @@ def volume_mute():
     if err:
         return jsonify({'success': False, 'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume muted'}), 200
+    return jsonify({'success': True, 'message': 'volume muted', 'volume': casts.get_volume()}), 200
 
 @bp.route("/volume-unmute")
 def volume_unmute():   
@@ -113,7 +113,7 @@ def volume_unmute():
     if err:
         return jsonify({'success': False, 'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume unmuted', 'data': {'volume': casts.get_volume()}}), 200
+    return jsonify({'success': True, 'message': 'volume unmuted', 'volume': casts.get_volume()}), 200
 
 app = Flask(__name__)
 app.register_blueprint(bp)
