@@ -10,6 +10,8 @@ from flask_cors import CORS
 
 
 bp = Blueprint('api', __name__, url_prefix=API_BASE)
+CORS(bp)
+
 casts = Casts()
 stream = Stream()
 
@@ -115,4 +117,3 @@ def volume_unmute():
 
 app = Flask(__name__)
 app.register_blueprint(bp)
-CORS(app)
