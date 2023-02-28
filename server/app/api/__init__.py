@@ -27,7 +27,7 @@ def status():
         cast_status = True
 
     response = {
-        'streamStatus': stream.ready,
+        'streamStatus': (stream.ready),
         'castStatus': cast_status,
         'castInfo': cast_object
     }
