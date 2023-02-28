@@ -12,11 +12,11 @@ function CastManager() {
   const [casts, setCasts] = useState([]);
   const [cast, setCast] = useState({});
   const [listDisabled, setListDisabled] = useState(false);
-  const [isRefreshed, setIsRefreshed] = useState(false);
+  const [isPlaying, setPlaying] = useState(false);
   const [isRefreshDisabled, setIsRefreshDisabled] = useState(false);
 
   const handleCastSelect = (value) => {
-    setCast(value);
+    setCast({...value, isActive: false});
   };
 
   const handleCastPlay = (value) => {
@@ -27,7 +27,9 @@ function CastManager() {
     const getStatus = async () => {
       const status = await routes.get(routes.STATUS);
       if (status.streamStatus && status.castStatus){
-        setCast(status.cast);
+        setCast({...status.castInfo, isActive: true });
+        handleList();
+        setListDisabled(true);
       } else {
         handleList();
       }
@@ -73,7 +75,7 @@ function CastManager() {
         <Grid item xs={3}>
           <Tooltip title="Refresh">
             <span>
-              <IconButton aria-label="refresh" onClick={handleRefresh} disabled={isRefreshDisabled}>
+              <IconButton aria-label="refresh" onClick={handleRefresh} disabled={isRefreshDisabled || listDisabled}>
                 <RefreshIcon />
               </IconButton>
             </span>
