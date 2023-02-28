@@ -15,8 +15,6 @@ CORS(bp)
 casts = Casts()
 stream = Stream()
 
-volume_data = {'data': {'volume': casts.get_volume()}}
-
 @bp.route("/status")
 def status():
     cast_status = False
@@ -75,7 +73,7 @@ def stop_stream():
 
 @bp.route("/get-volume")
 def get_volume():   
-    return jsonify({'success': True, 'volume': casts.get_volume()}), 200
+    return jsonify({'success': True, 'data': {'volume': casts.get_volume()}}), 200
 
 @bp.route("/set-volume/<float:volume>")
 def set_volume(volume):   
@@ -83,7 +81,7 @@ def set_volume(volume):
     if err:
         return jsonify({'success': False, 'message': message}), 500
 
-    return jsonify({'success': True, 'message': 'volume set to: {}'.format(volume), **volume_data }), 200
+    return jsonify({'success': True, 'message': 'volume set to: {}'.format(volume), 'data': {'volume': casts.get_volume()} }), 200
 
 @bp.route("/volume-up")
 def volume_up():   
@@ -91,7 +89,7 @@ def volume_up():
     if err:
         return jsonify({'success': False, 'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume up', **volume_data}), 200
+    return jsonify({'success': True, 'message': 'volume up', 'data': {'volume': casts.get_volume()}}), 200
 
 @bp.route("/volume-down")
 def volume_down():   
@@ -99,7 +97,7 @@ def volume_down():
     if err:
         return jsonify({'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume down', **volume_data}), 200
+    return jsonify({'success': True, 'message': 'volume down', 'data': {'volume': casts.get_volume()}}), 200
 
 @bp.route("/volume-mute")
 def volume_mute():   
@@ -115,7 +113,7 @@ def volume_unmute():
     if err:
         return jsonify({'success': False, 'message': message}), 400
 
-    return jsonify({'success': True, 'message': 'volume unmuted', **volume_data}), 200
+    return jsonify({'success': True, 'message': 'volume unmuted', 'data': {'volume': casts.get_volume()}}), 200
 
 app = Flask(__name__)
 app.register_blueprint(bp)
