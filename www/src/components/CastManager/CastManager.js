@@ -12,7 +12,6 @@ function CastManager() {
   const [casts, setCasts] = useState([]);
   const [cast, setCast] = useState({});
   const [listDisabled, setListDisabled] = useState(false);
-  const [isPlaying, setPlaying] = useState(false);
   const [isRefreshDisabled, setIsRefreshDisabled] = useState(false);
 
   const handleCastSelect = (value) => {
