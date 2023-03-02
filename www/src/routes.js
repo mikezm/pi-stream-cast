@@ -1,4 +1,9 @@
-const baseUri = process.env.PI_STREAM_CAST_ENV === 'prod' ? 'http://localhost/api' : 'http://192.168.50.242:5000/api';
+const baseUri = process.env.NODE_ENV === 'production' ? 
+  'http://localhost/api' 
+  : 
+  'http://192.168.50.242:5000/api';
+
+//const baseUri = `${process.env.REACT_APP_API_URL}/api`;
 
 export const STATUS = `${baseUri}/status`;
 export const LIST_CASTS = `${baseUri}/list-casts`;
