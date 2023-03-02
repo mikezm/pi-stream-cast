@@ -21,7 +21,7 @@ function CastControls(props) {
   const [isPlayDisabled, setIsPlayDisabled] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isVolumeDisabled, setIsVolumeDisabled] = useState(false);
-  const [volume, setVolume] = useState(0.0);
+  const [volume, setVolume] = useState(0);
 
   useEffect(() => {
     setIsPlayDisabled(!(props.cast.uuid));
@@ -141,7 +141,16 @@ function CastControls(props) {
               </IconButton>
             </span>
           </Tooltip>
-          <Slider aria-label="Volume" value={volume} onChange={handleVolumeChange} onChangeCommitted={handleVolumeChangeCommitted} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}/>
+          <Slider 
+            aria-label="Volume" 
+            value={volume} 
+            onChange={handleVolumeChange} 
+            onChangeCommitted={handleVolumeChangeCommitted} 
+            disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}
+            min={0}
+            step={1}
+            max={100}
+          />
           <Tooltip title="Volume Up">
             <span>
               <IconButton aria-label="volume up" onClick={handleVolumeUp} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}>
