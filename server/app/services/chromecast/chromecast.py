@@ -43,7 +43,6 @@ class Casts:
                     if str(cast.uuid) == uuid][0]
             self.cast.wait()
             self.mc = self.cast.media_controller
-            self.mc.block_until_active()
         except IndexError:
             pass
 
@@ -75,7 +74,6 @@ class Casts:
         } for cast in self.chromecasts]
 
     def get_cast_info(self):
-        self.cast.wait()
         volume = self.get_volume()
         return {
             'name': self.cast.name,
@@ -95,7 +93,6 @@ class Casts:
         return [True, "volume out of range"]
 
     def get_volume(self):
-        self.mc.block_until_active()
         return round(self.cast.status.volume_level, 2)
 
     def volume_up(self):
