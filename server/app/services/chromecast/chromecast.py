@@ -73,6 +73,7 @@ class Casts:
         } for cast in self.chromecasts]
 
     def get_cast_info(self):
+        self.cast.wait()
         volume = self.get_volume()
         return {
             'name': self.cast.name,
