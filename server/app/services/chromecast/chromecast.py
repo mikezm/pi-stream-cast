@@ -1,6 +1,5 @@
 import time
 import pychromecast
-from pychromecast.controllers.volume import VolumeListener
 
 STATUS_ACTIVE = "ACTIVE"
 STATUS_INACTIVE = "INACTIVE"
