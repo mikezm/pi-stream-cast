@@ -147,9 +147,9 @@ function CastControls(props) {
             onChange={handleVolumeChange} 
             onChangeCommitted={handleVolumeChangeCommitted} 
             disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}
-            min={0}
-            step={1}
-            max={100}
+            //min={0}
+            //step={1}
+            //max={100}
           />
           <Tooltip title="Volume Up">
             <span>

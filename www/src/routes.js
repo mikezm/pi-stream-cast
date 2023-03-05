@@ -3,8 +3,6 @@ const baseUri = process.env.NODE_ENV === 'production' ?
   : 
   'http://192.168.50.242:5000/api';
 
-//const baseUri = `${process.env.REACT_APP_API_URL}/api`;
-
 export const STATUS = `${baseUri}/status`;
 export const LIST_CASTS = `${baseUri}/list-casts`;
 export const REFRESH_CASTS = `${baseUri}/refresh-casts`;

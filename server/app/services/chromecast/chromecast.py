@@ -68,7 +68,8 @@ class Casts:
             'uuid': str(cast.uuid),
             'ip': cast.cast_info.host,
             'port': cast.cast_info.port,
-            'type': cast.cast_info.cast_type
+            'type': cast.cast_info.cast_type,
+            'volume': 0
         } for cast in self.chromecasts]
 
     def get_cast_info(self):
@@ -77,6 +78,7 @@ class Casts:
             'name': self.cast.name,
             'uuid': str(self.cast.uuid),
             'ip': self.cast.cast_info.host,
+            'port': self.cast.cast_info.port,
             'type': self.cast.cast_info.cast_type,
             'volume': volume
         }
