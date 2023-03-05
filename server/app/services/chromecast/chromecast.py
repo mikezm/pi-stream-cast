@@ -1,5 +1,6 @@
 import time
 import pychromecast
+from pychromecast.controllers.volume import VolumeListener
 
 STATUS_ACTIVE = "ACTIVE"
 STATUS_INACTIVE = "INACTIVE"
@@ -42,6 +43,9 @@ class Casts:
                     if str(cast.uuid) == uuid][0]
             self.cast.wait()
             self.mc = self.cast.media_controller
+            #self.volume = self.cast.volume
+            self.volume_listener = VolumeListener()
+            self.cast.volume.add_volume_listener(self.volume_listener)
         except IndexError:
             pass
 
@@ -87,7 +91,7 @@ class Casts:
     def set_volume(self, volume):
         if volume >= 0 and volume <= 1:
             self.cast.set_volume(volume)
-            self.cast.wait()
+            self.volume_listener.wait()
             return [False, None]
         
         return [True, "volume out of range"]
@@ -104,23 +108,17 @@ class Casts:
         return self.set_volume(current_volume - VOLUME_STEP)
 
     def volume_mute(self):
-        self.cast.set_volume_muted(True)
-        self.cast.wait()
-        return [False, None]
-        if self.before_mute_volume is None:
-            self.before_mute_volume = self.get_volume()
-            return self.set_volume(0.0)
+        if self.cast.is_volume_muted:
+            return [True, "already muted"]
         
-        return [True, "already muted"]
-
-    def volume_unmute(self):
         self.cast.set_volume_muted(True)
-        self.cast.wait()
+        self.volume_listener.wait()
         return [False, None]
-        if self.before_mute_volume is not None:
-            volume = self.before_mute_volume
-            self.before_mute_volume = None
-            return self.set_volume(volume)
-
-        return [True, "must be muted first"]
-
+        
+    def volume_unmute(self):
+        if not self.cast.is_volume_muted:
+            return [True, "must be muted first"]
+        
+        self.cast.set_volume_muted(False)
+        self.volume_listener.wait()
+        return [False, None]
