@@ -17,6 +17,7 @@ class Casts:
         self.browser = None
         self.before_mute_volume = None
         self.playing = False
+        self.volume = 0.0
         self.status = STATUS_INACTIVE
         self.fetch_chromecasts()
 
@@ -43,9 +44,7 @@ class Casts:
                     if str(cast.uuid) == uuid][0]
             self.cast.wait()
             self.mc = self.cast.media_controller
-            #self.volume = self.cast.volume
-            self.volume_listener = VolumeListener()
-            self.cast.volume.add_volume_listener(self.volume_listener)
+            self.mc.block_until_active()
         except IndexError:
             pass
 
@@ -91,12 +90,13 @@ class Casts:
     def set_volume(self, volume):
         if volume >= 0 and volume <= 1:
             self.cast.set_volume(volume)
-            self.volume_listener.wait()
+            self.mc.block_until_active()
             return [False, None]
         
         return [True, "volume out of range"]
 
     def get_volume(self):
+        self.mc.block_until_active()
         return round(self.cast.status.volume_level, 2)
 
     def volume_up(self):
@@ -112,7 +112,7 @@ class Casts:
             return [True, "already muted"]
         
         self.cast.set_volume_muted(True)
-        self.volume_listener.wait()
+        self.mc.block_until_active()
         return [False, None]
         
     def volume_unmute(self):
@@ -120,5 +120,5 @@ class Casts:
             return [True, "must be muted first"]
         
         self.cast.set_volume_muted(False)
-        self.volume_listener.wait()
+        self.mc.block_until_active()
         return [False, None]
