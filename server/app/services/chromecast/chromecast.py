@@ -86,6 +86,7 @@ class Casts:
     def set_volume(self, volume):
         if volume >= 0 and volume <= 1:
             self.cast.set_volume(volume)
+            self.cast.wait()
             return [False, None]
         
         return [True, "volume out of range"]
@@ -102,6 +103,9 @@ class Casts:
         return self.set_volume(current_volume - VOLUME_STEP)
 
     def volume_mute(self):
+        self.cast.set_volume_muted(True)
+        self.cast.wait()
+        return [False, None]
         if self.before_mute_volume is None:
             self.before_mute_volume = self.get_volume()
             return self.set_volume(0.0)
@@ -109,6 +113,9 @@ class Casts:
         return [True, "already muted"]
 
     def volume_unmute(self):
+        self.cast.set_volume_muted(True)
+        self.cast.wait()
+        return [False, None]
         if self.before_mute_volume is not None:
             volume = self.before_mute_volume
             self.before_mute_volume = None
