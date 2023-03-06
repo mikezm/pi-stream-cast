@@ -104,7 +104,7 @@ class Casts:
         return self.set_volume(current_volume - VOLUME_STEP)
 
     def volume_mute(self):
-        if self.cast.is_volume_muted:
+        if self.cast.status.volume_muted:
             return [True, "already muted"]
         
         self.cast.set_volume_muted(True)
@@ -112,7 +112,7 @@ class Casts:
         return [False, None]
         
     def volume_unmute(self):
-        if not self.cast.is_volume_muted:
+        if not self.cast.status.volume_muted:
             return [True, "must be muted first"]
         
         self.cast.set_volume_muted(False)
