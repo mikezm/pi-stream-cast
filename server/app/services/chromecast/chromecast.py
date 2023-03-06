@@ -1,11 +1,9 @@
-import time
 import pychromecast
 
 STATUS_ACTIVE = "ACTIVE"
 STATUS_INACTIVE = "INACTIVE"
 STATUS_NEW = "NEW"
 VOLUME_STEP = 0.01
-
 
 class Casts:
     def __init__(self) -> None:
@@ -16,7 +14,6 @@ class Casts:
         self.browser = None
         self.before_mute_volume = None
         self.playing = False
-        self.volume = 0.0
         self.status = STATUS_INACTIVE
         self.fetch_chromecasts()
 
@@ -24,7 +21,6 @@ class Casts:
         """Return a list of chromecasts"""
         self.chromecasts, self.browser = pychromecast.get_chromecasts()
         pychromecast.discovery.stop_discovery(self.browser)
-
 
     def is_player_ready(self):
         return (
@@ -72,7 +68,8 @@ class Casts:
             'ip': cast.cast_info.host,
             'port': cast.cast_info.port,
             'type': cast.cast_info.cast_type,
-            'volume': 0
+            'volume': 0,
+            'status': {}
         } for cast in self.chromecasts]
 
     def get_cast_info(self):
@@ -83,21 +80,17 @@ class Casts:
             'ip': self.cast.cast_info.host,
             'port': self.cast.cast_info.port,
             'type': self.cast.cast_info.cast_type,
-            'volume': volume
+            'volume': volume,
+            'status': self.cast.status
         }
 
     def set_volume(self, volume):
         if volume < 0 or volume > 1:
             return [True, "volume out of range"]
 
-        while self.get_volume() != volume:
-            print('setting volume from ({}) to ({})'.format(self.cast.status.volume_level(), volume))
-            self.cast.set_volume(volume)
-            time.sleep(0.1)
+        self.cast.set_volume(volume)
         self.mc.block_until_active()
-        return [False, None]
-        
-        
+        return [False, None]        
 
     def get_volume(self):
         return round(self.cast.status.volume_level, 2)
