@@ -91,6 +91,7 @@ class Casts:
             return [True, "volume out of range"]
 
         while self.get_volume() != volume:
+            print('setting volume from ({}) to ({})'.format(self.cast.status.volume_level(), volume))
             self.cast.set_volume(volume)
             time.sleep(0.1)
         self.mc.block_until_active()
