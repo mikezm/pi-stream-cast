@@ -146,7 +146,7 @@ function CastControls(props) {
           <Slider 
 
             aria-label="Volume" 
-            value={volume}
+            value={volume || 0}
             onChange={handleVolumeChange} 
             onChangeCommitted={handleVolumeChangeCommitted} 
             disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}

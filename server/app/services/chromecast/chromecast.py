@@ -23,6 +23,8 @@ class Casts:
     def fetch_chromecasts(self):
         """Return a list of chromecasts"""
         self.chromecasts, self.browser = pychromecast.get_chromecasts()
+        pychromecast.discovery.stop_discovery(self.browser)
+
 
     def is_player_ready(self):
         return (
@@ -85,12 +87,16 @@ class Casts:
         }
 
     def set_volume(self, volume):
-        if volume >= 0 and volume <= 1:
+        if volume < 0 or volume > 1:
+            return [True, "volume out of range"]
+
+        while self.get_volume() != volume:
             self.cast.set_volume(volume)
-            self.mc.block_until_active()
-            return [False, None]
+            time.sleep(0.1)
+        self.mc.block_until_active()
+        return [False, None]
         
-        return [True, "volume out of range"]
+        
 
     def get_volume(self):
         return round(self.cast.status.volume_level, 2)
