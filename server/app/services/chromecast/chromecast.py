@@ -69,8 +69,7 @@ class Casts:
             'ip': cast.cast_info.host,
             'port': cast.cast_info.port,
             'type': cast.cast_info.cast_type,
-            'volume': 0,
-            'status': {}
+            'volume': 0
         } for cast in self.chromecasts]
 
     def get_cast_info(self):
@@ -81,8 +80,7 @@ class Casts:
             'ip': self.cast.cast_info.host,
             'port': self.cast.cast_info.port,
             'type': self.cast.cast_info.cast_type,
-            'volume': volume,
-            'status': self.cast.status
+            'volume': volume
         }
 
     def set_volume(self, volume):
