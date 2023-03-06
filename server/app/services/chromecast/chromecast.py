@@ -20,7 +20,7 @@ class Casts:
     def fetch_chromecasts(self):
         """Return a list of chromecasts"""
         self.chromecasts, self.browser = pychromecast.get_chromecasts()
-        pychromecast.discovery.stop_discovery(self.browser)
+        # pychromecast.discovery.stop_discovery(self.browser)
 
     def is_player_ready(self):
         return (
