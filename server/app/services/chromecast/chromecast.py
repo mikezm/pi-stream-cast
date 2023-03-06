@@ -6,7 +6,6 @@ STATUS_INACTIVE = "INACTIVE"
 STATUS_NEW = "NEW"
 VOLUME_STEP = 0.01
 
-
 class Casts:
     def __init__(self) -> None:
         self.uuid = None
@@ -42,6 +41,7 @@ class Casts:
                     if str(cast.uuid) == uuid][0]
             self.cast.wait()
             self.mc = self.cast.media_controller
+            pychromecast.discovery.stop_discovery(self.browser)
         except IndexError:
             pass
 
@@ -68,7 +68,8 @@ class Casts:
             'uuid': str(cast.uuid),
             'ip': cast.cast_info.host,
             'port': cast.cast_info.port,
-            'type': cast.cast_info.cast_type
+            'type': cast.cast_info.cast_type,
+            'volume': 0
         } for cast in self.chromecasts]
 
     def get_cast_info(self):
@@ -77,16 +78,20 @@ class Casts:
             'name': self.cast.name,
             'uuid': str(self.cast.uuid),
             'ip': self.cast.cast_info.host,
+            'port': self.cast.cast_info.port,
             'type': self.cast.cast_info.cast_type,
             'volume': volume
         }
 
     def set_volume(self, volume):
-        if volume >= 0 and volume <= 1:
+        if volume < 0 or volume > 1:
+            return [True, "volume out of range"]
+
+        while self.get_volume() != volume:
             self.cast.set_volume(volume)
-            return [False, None]
-        
-        return [True, "volume out of range"]
+            time.sleep(0.1)
+        self.mc.block_until_active()
+        return [False, None]        
 
     def get_volume(self):
         return round(self.cast.status.volume_level, 2)
@@ -100,17 +105,17 @@ class Casts:
         return self.set_volume(current_volume - VOLUME_STEP)
 
     def volume_mute(self):
-        if self.before_mute_volume is None:
-            self.before_mute_volume = self.get_volume()
-            return self.set_volume(0.0)
+        if self.cast.status.volume_muted:
+            return [True, "already muted"]
         
-        return [True, "already muted"]
-
+        self.cast.set_volume_muted(True)
+        self.mc.block_until_active()
+        return [False, None]
+        
     def volume_unmute(self):
-        if self.before_mute_volume is not None:
-            volume = self.before_mute_volume
-            self.before_mute_volume = None
-            return self.set_volume(volume)
-
-        return [True, "must be muted first"]
-
+        if not self.cast.status.volume_muted:
+            return [True, "must be muted first"]
+        
+        self.cast.set_volume_muted(False)
+        self.mc.block_until_active()
+        return [False, None]

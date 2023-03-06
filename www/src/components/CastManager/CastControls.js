@@ -2,6 +2,7 @@
 import * as routes from '../../routes';
 import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Tooltip from '@mui/material/Tooltip';
@@ -21,11 +22,12 @@ function CastControls(props) {
   const [isPlayDisabled, setIsPlayDisabled] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isVolumeDisabled, setIsVolumeDisabled] = useState(false);
-  const [volume, setVolume] = useState(0.0);
+  const [volume, setVolume] = useState(0);
 
   useEffect(() => {
     setIsPlayDisabled(!(props.cast.uuid));
     setIsPlaying(props.cast.isActive);
+    setVolume(roundVolume(props.cast.volume));
   }, [props.cast]);
 
   const delay = async (num=1) => {
@@ -98,8 +100,8 @@ function CastControls(props) {
           <Typography variant="subtitle1" color="text.secondary" component="div">
             {cast.ip}
           </Typography>
-        </CardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+        </CardContent>   
+        <Stack spacing={2} direction="row" sx={{ mb: 1, px: 1 }} alignItems="center">       
           {isPlaying ? 
             <Tooltip title="Stop">
               <span>
@@ -141,7 +143,19 @@ function CastControls(props) {
               </IconButton>
             </span>
           </Tooltip>
-          <Slider aria-label="Volume" value={volume} onChange={handleVolumeChange} onChangeCommitted={handleVolumeChangeCommitted} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}/>
+          <Slider 
+
+            aria-label="Volume" 
+            value={volume || 0}
+            onChange={handleVolumeChange} 
+            onChangeCommitted={handleVolumeChangeCommitted} 
+            disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}
+            sx={{ width: 120 }}
+            min={0}
+            step={1}
+            max={100}
+            defaultValue={0}
+          />
           <Tooltip title="Volume Up">
             <span>
               <IconButton aria-label="volume up" onClick={handleVolumeUp} disabled={!isPlaying || isVolumeDisabled || isMuted || isPlayDisabled}>
@@ -149,7 +163,7 @@ function CastControls(props) {
               </IconButton>
             </span>
           </Tooltip>
-        </Box>
+        </Stack>
       </Box>
     </Card>
   );
