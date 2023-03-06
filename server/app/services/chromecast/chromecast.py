@@ -1,3 +1,4 @@
+import time
 import pychromecast
 
 STATUS_ACTIVE = "ACTIVE"
@@ -88,7 +89,9 @@ class Casts:
         if volume < 0 or volume > 1:
             return [True, "volume out of range"]
 
-        self.cast.set_volume(volume)
+        while self.get_volume() != volume:
+            self.cast.set_volume(volume)
+            time.sleep(0.1)
         self.mc.block_until_active()
         return [False, None]        
 
