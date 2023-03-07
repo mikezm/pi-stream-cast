@@ -1,5 +1,5 @@
 const baseUri = process.env.NODE_ENV === 'production' ? 
-  'http://localhost/api' 
+  'http://192.168.50.242/api'
   : 
   'http://192.168.50.242:5000/api';
 
