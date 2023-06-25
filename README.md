@@ -63,3 +63,26 @@ npm start
 ```
 sudo apt-get install apache2 libapache2-mod-wsgi-py3
 ```
+
+#### Apache site config:
+
+```
+WSGISocketRotation Off
+<VirtualHost *:80>
+  ServerName pi-stream-cast.io
+  DocumentRoot /var/www/html/pi-stream-cast
+
+  WSGIDaemonProcess bridge threads=1 python-home=/var/www/html/pi-stream-cast/api/venv 
+  WSGIProcessGroup bridge
+  WSGIScriptAlias /api /var/www/html/pi-stream-cast/api/api.wsgi 
+
+  <Directory /var/www/html/pi-stream-cast/>
+    Options -Indexes +FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+
+  ErrorLog ${APACHE_LOG_DIR}/pi-stream-cast.io-error.log
+  CustomLog ${APACHE_LOG_DIR}/pi-stream-cast.io-access.log combined
+</VirtualHost>
+```
